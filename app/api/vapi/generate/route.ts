@@ -4,11 +4,11 @@ import { google } from "@ai-sdk/google";
 import { getRandomInterviewCover } from "@/lib/utils";
 import { db } from "@/firebase/admin";
 
-export async function Get(){
+export async function GET(){
     return Response.json({success:true, data:"Hello from VAPI Generate Route"},{status:200});
 }
 
-export async function Post(request:Request){
+export async function POST(request:Request){
     const {type,role,level,techstack,amount,userid}=await request.json();
     try {
        const { text: questions } = await generateText({

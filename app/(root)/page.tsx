@@ -4,7 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { dummyInterviews } from '@/constants';
 import InterviewCard from '@/components/InterviewCard';
-import { getCurrentUser, getInterviewsByUserId,getLatestInterviews} from '@/lib/actions/auth.action';
+import { getCurrentUser} from '@/lib/actions/auth.action';
+import { getInterviewsByUserId,getLatestInterviews } from '@/lib/actions/general.action';
 import { redirect } from 'next/navigation';
 
 const page = async () => {
@@ -13,7 +14,6 @@ const page = async () => {
     getInterviewsByUserId(user?.id!),
     getLatestInterviews({ userId: user?.id! }),
   ]);
-
 
 
 
@@ -40,7 +40,13 @@ const page = async () => {
 <div className='interviews-section'>
   {hasPastInterviews ? (
     userInterviews?.map((interview) => (
-      <InterviewCard key={interview.id} {...interview} />
+      <InterviewCard key={interview.id}
+                userId={user?.id}
+                interviewId={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt} />
     ))
   ) : (
     <p>No past interviews found.</p>
@@ -56,7 +62,13 @@ const page = async () => {
 <div className='interviews-section'>
   {hasUpcomingInterviews ? (
     latestInterviews?.map((interview) => (
-      <InterviewCard key={interview.id} {...interview} />
+      <InterviewCard   key={interview.id}
+                userId={user?.id}
+                interviewId={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt} />
     ))
   ) : (
     <p>There are no new Interviews</p>

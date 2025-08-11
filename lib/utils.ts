@@ -22,7 +22,27 @@ const checkIconExists = async (url: string) => {
   }
 };
 
-export const getTechLogos = async (techArray: string[]) => {
+// export const getTechLogos = async (techArray: string[]) => {
+//   const logoURLs = techArray.map((tech) => {
+//     const normalized = normalizeTechName(tech);
+//     return {
+//       tech,
+//       url: `${techIconBaseURL}/${normalized}/${normalized}-original.svg`,
+//     };
+//   });
+
+//   const results = await Promise.all(
+//     logoURLs.map(async ({ tech, url }) => ({
+//       tech,
+//       url: (await checkIconExists(url)) ? url : "/tech.svg",
+//     }))
+//   );
+
+//   return results;
+// };
+
+// filepath: /Users/akshadgupta/Interview_prep/interview/lib/utils.ts
+export const getTechLogos = async (techArray: string[] = []) => {
   const logoURLs = techArray.map((tech) => {
     const normalized = normalizeTechName(tech);
     return {

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { dummyInterviews } from '@/constants';
 import InterviewCard from '@/components/InterviewCard';
+import InterviewCards from '@/components/InterviewCards';
 import { getCurrentUser} from '@/lib/actions/auth.action';
 import { getInterviewsByUserId,getLatestInterviews } from '@/lib/actions/general.action';
 import { redirect } from 'next/navigation';
@@ -62,7 +63,7 @@ const page = async () => {
 <div className='interviews-section'>
   {hasUpcomingInterviews ? (
     latestInterviews?.map((interview) => (
-      <InterviewCard   key={interview.id}
+      <InterviewCards   key={interview.id}
                 userId={user?.id}
                 interviewId={interview.id}
                 role={interview.role}

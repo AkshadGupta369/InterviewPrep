@@ -9,6 +9,7 @@ import { useState,useEffect } from 'react';
 import { set } from 'zod';
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
+import { createFeedback } from '@/lib/actions/general.action';
 // import { createFeedback } from "@/lib/actions/general.action";
 
 
@@ -24,7 +25,7 @@ interface SavedMessage{
     content: string;
 }
 
-const Agent = ({userName,userId,type,interviewId,questions}:AgentProps) => {
+const Agent = ({userName,userId,type,interviewId,questions,feedbackId}:AgentProps) => {
     const router = useRouter();
     const[isSpeaking,setisSpeaking] = useState(false);
     const[callStatus,setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -70,10 +71,12 @@ const Agent = ({userName,userId,type,interviewId,questions}:AgentProps) => {
 
    const handleGenerateFeedback=async(messages:SavedMessage[])=>{
     console.log('Generate Feedback here');
-    const {success,id}={
-      success:true,
-      id:'feedback-id'
-    }
+     const {success,feedbackId:id}=await createFeedback({
+      interviewId:interviewId!,
+      userId:userId!,
+      transcript:messages,
+      feedbackId,
+     })
 
     if(success&&id){
       router.push(`/interview/${interviewId}/feedback`);
